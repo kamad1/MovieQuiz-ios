@@ -79,6 +79,8 @@ final class MovieQuizViewController: UIViewController {
             let viewModel = convert(model: nextQuestion)
             
             show(quiz: viewModel)
+            //до работка
+            imageView.layer.borderWidth = 0
         }
     }
     
@@ -97,12 +99,12 @@ final class MovieQuizViewController: UIViewController {
     }
     
     struct QuizResultsViewModel {
-      // строка с заголовком алерта
-      let title: String
-      // строка с текстом о количестве набранных очков
-      let text: String
-      // текст для кнопки алерта
-      let buttonText: String
+        // строка с заголовком алерта
+        let title: String
+        // строка с текстом о количестве набранных очков
+        let text: String
+        // текст для кнопки алерта
+        let buttonText: String
     }
     
     private func show(quiz result: QuizResultsViewModel) {
@@ -123,8 +125,9 @@ final class MovieQuizViewController: UIViewController {
         alert.addAction(action)
         
         self.present(alert, animated: true, completion: nil)
+       
     }
- //______________________________________________________________
+    //______________________________________________________________
     
     
     
@@ -132,7 +135,7 @@ final class MovieQuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let currentQustion = convert(model: questions[currentQuestionIndex])
-                 show(quiz: QuizStepViewModel(image: currentQustion.image, question: currentQustion.question, questionNumber: currentQustion.questionNumber))
+        show(quiz: QuizStepViewModel(image: currentQustion.image, question: currentQustion.question, questionNumber: currentQustion.questionNumber))
         
     }
     
