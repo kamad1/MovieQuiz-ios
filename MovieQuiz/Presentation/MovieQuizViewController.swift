@@ -83,6 +83,10 @@ final class MovieQuizViewController: UIViewController {
     }
     
     private func showAnswerResult(isCorrect: Bool) {
+        if isCorrect { // 1
+            correctAnswers += 1 // 2
+        }
+        
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
@@ -91,6 +95,7 @@ final class MovieQuizViewController: UIViewController {
             self.showNextQuestionOrResults()
         }
     }
+    
     struct QuizResultsViewModel {
       // строка с заголовком алерта
       let title: String
@@ -126,7 +131,8 @@ final class MovieQuizViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let currentQustion = convert(model: questions[currentQuestionIndex])
+                 show(quiz: QuizStepViewModel(image: currentQustion.image, question: currentQustion.question, questionNumber: currentQustion.questionNumber))
         
     }
     
