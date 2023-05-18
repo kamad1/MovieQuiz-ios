@@ -33,7 +33,7 @@ final class MovieQuizViewController: UIViewController {
     private var correctAnswers = 0
     
     private let questionsAmount: Int = 10
-    private let questionFactory: QuestionFactory = QuestionFactory()
+    private var questionFactory: QuestionFactory = QuestionFactory()
     private var currentQuestion: QuizQuestion?
 
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
@@ -56,35 +56,35 @@ final class MovieQuizViewController: UIViewController {
     
     private func showNextQuestionOrResults() {
         imageView.layer.borderColor = UIColor.clear.cgColor
-//        if currentQuestionIndex == questions.count - 1 {
-//            let text = "Ваш результат: \(correctAnswers)/10"
-//            let viewModel = QuizResultsViewModel(
-//                title: "Этот раунд окончен!",
-//                text: text,
-//                buttonText: "Сыграть ещё раз")
+        //        if currentQuestionIndex == questions.count - 1 {
+        //            let text = "Ваш результат: \(correctAnswers)/10"
+        //            let viewModel = QuizResultsViewModel(
+        //                title: "Этот раунд окончен!",
+        //                text: text,
+        //                buttonText: "Сыграть ещё раз")
         if currentQuestionIndex == questionsAmount - 1 {
             let text = correctAnswers == questionsAmount ?
-                    "Поздравляем, Вы ответили на 10 из 10!" :
-                    "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
+            "Поздравляем, Вы ответили на 10 из 10!" :
+            "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
             
             show(quiz: viewModel)
         } else {
             currentQuestionIndex += 1
-//            let nextQuestion = questions[currentQuestionIndex]
-//            let viewModel = convert(model: nextQuestion)
-//
-//            show(quiz: viewModel)
+            //            let nextQuestion = questions[currentQuestionIndex]
+            //            let viewModel = convert(model: nextQuestion)
+            //
+            //            show(quiz: viewModel)
             if let nextQuestion = questionFactory.requestNextQuestion() {
                 currentQuestion = nextQuestion
                 let viewModel = convert(model: nextQuestion)
                 
                 show(quiz: viewModel)
-            //до работка
-            imageView.layer.borderWidth = 0
-            
+                //до работка
+                imageView.layer.borderWidth = 0
+                
+            }
         }
     }
-    
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
@@ -94,7 +94,7 @@ final class MovieQuizViewController: UIViewController {
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self]
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
             self.showNextQuestionOrResults()
         }
