@@ -56,18 +56,18 @@ final class MovieQuizViewController: UIViewController {
     
     private func showNextQuestionOrResults() {
         imageView.layer.borderColor = UIColor.clear.cgColor
-        //        if currentQuestionIndex == questions.count - 1 {
-        //            let text = "Ваш результат: \(correctAnswers)/10"
-        //            let viewModel = QuizResultsViewModel(
-        //                title: "Этот раунд окончен!",
-        //                text: text,
-        //                buttonText: "Сыграть ещё раз")
         if currentQuestionIndex == questionsAmount - 1 {
             let text = correctAnswers == questionsAmount ?
             "Поздравляем, Вы ответили на 10 из 10!" :
             "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
-            
-            show(quiz: viewModel)
+        //        if currentQuestionIndex == questions.count - 1 {
+        //            let text = "Ваш результат: \(correctAnswers)/10"
+                    let viewModel = QuizResultsViewModel(
+                        title: "Этот раунд окончен!",
+                        text: text,
+                        buttonText: "Сыграть ещё раз")
+        
+           show(quiz: viewModel)
         } else {
             currentQuestionIndex += 1
             //            let nextQuestion = questions[currentQuestionIndex]
