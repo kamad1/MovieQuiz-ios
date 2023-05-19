@@ -35,6 +35,7 @@ final class MovieQuizViewController: UIViewController {
     private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactory = QuestionFactory()
     private var currentQuestion: QuizQuestion?
+//    private let questionFactory: QuestionFactoryProtocol = QuestionFactory()
 
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
 //        let questionStep = QuizStepViewModel(
