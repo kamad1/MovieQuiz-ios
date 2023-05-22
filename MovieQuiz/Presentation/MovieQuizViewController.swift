@@ -114,7 +114,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //mark: ДОБАВbЛ СТРОКУ НИЖЕ
+        //mark: ДОБАВbЛ СТРОКУ НИЖЕ 
         alertPresenter = AlertPresenter(delegate: self)
         questionFactory = QuestionFactory(delegate: self)
         questionFactory?.requestNextQuestion()
