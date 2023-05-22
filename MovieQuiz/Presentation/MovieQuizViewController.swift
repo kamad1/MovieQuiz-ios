@@ -1,10 +1,9 @@
 import UIKit
-
+// Добавил ниже AlertPresenterProtocol
 final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     
     @IBAction private func noButtonClicked(_ sender: Any) {
-        //        let currentQuestion = questions[currentQuestionIndex]
         guard let currentQuestion = currentQuestion else {
             return
         }
@@ -15,7 +14,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     @IBAction private func yesButtonClicked(_ sender: Any) {
-        //        let currentQuestion = questions[currentQuestionIndex]
         guard let currentQuestion = currentQuestion else {
             return
         }
@@ -33,17 +31,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var correctAnswers = 0
     
     private let questionsAmount: Int = 10
-    //    private var questionFactory: QuestionFactory = QuestionFactory()
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
-    //    private let questionFactory: QuestionFactoryProtocol = QuestionFactory()
+    //mark: ДОБАВbЛ СТРОКУ НИЖЕ
+    private var alertPresenter: AlertPresenterProtocol?
+    
     
     
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        //        let questionStep = QuizStepViewModel(
-        //            image: UIImage(named: model.image) ?? UIImage(),
-        //            question: model.text,
-        //            questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)")
         let questionStep = QuizStepViewModel(
             image: UIImage(named: model.image) ?? UIImage(),
             question: model.text,
@@ -63,8 +58,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             let text = correctAnswers == questionsAmount ?
             "Поздравляем, Вы ответили на 10 из 10!" :
             "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
-            //        if currentQuestionIndex == questions.count - 1 {
-            //            let text = "Ваш результат: \(correctAnswers)/10"
             let viewModel = QuizResultsViewModel(
                 title: "Этот раунд окончен!",
                 text: text,
@@ -74,15 +67,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         } else {
             currentQuestionIndex += 1
             self.questionFactory?.requestNextQuestion()
-            //            let nextQuestion = questions[currentQuestionIndex]
-            //            let viewModel = convert(model: nextQuestion)
-            //
-            //            show(quiz: viewModel)
-            //            if let nextQuestion = questionFactory.requestNextQuestion() {
-            //                currentQuestion = nextQuestion
-            //                let viewModel = convert(model: nextQuestion)
-            //
-            //                show(quiz: viewModel)
             //до работка
             imageView.layer.borderWidth = 0
             
@@ -111,26 +95,16 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             title: result.title,
             message: result.text,
             preferredStyle: .alert)
-        
+
         let action = UIAlertAction(title: result.buttonText, style: .default) { [weak self] _ in
             guard let self = self else { return }
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
-            
-            //            let firstQuestion = self.questions[self.currentQuestionIndex]
-            //            let viewModel = self.convert(model: firstQuestion)
-            //            self.show(quiz: viewModel)
-            //            if let firstQuestion = self.questionFactory.requestNextQuestion() {
-            //                self.currentQuestion = firstQuestion
-            //                let viewModel = self.convert(model: firstQuestion)
-            //
-            //                self.show(quiz: viewModel)
-            //            }
             questionFactory?.requestNextQuestion()
         }
-        
+
         alert.addAction(action)
-        
+
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -140,16 +114,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        //mark: ДОБАВbЛ СТРОКУ НИЖЕ
+        alertPresenter = AlertPresenter(delegate: self)
         questionFactory = QuestionFactory(delegate: self)
-        //        let currentQustion = convert(model: questions[currentQuestionIndex])
-        //        show(quiz: QuizStepViewModel(image: currentQustion.image, question: currentQustion.question, questionNumber: currentQustion.questionNumber))
-        //        if let firstQuestion = questionFactory.requestNextQuestion() {
-        //            currentQuestion = firstQuestion
-        //            let viewModel = convert(model: firstQuestion)
-        //            show(quiz: viewModel)
-        //        }
         questionFactory?.requestNextQuestion()
         imageView.layer.cornerRadius = 20
+        
     }
     
     // MARK: - QuestionFactoryDelegate
