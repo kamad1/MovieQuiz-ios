@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GameRecord: Codable {
+struct GameRecord: Codable, Comparable {
     let correct: Int
     let total: Int
     let date: Date
