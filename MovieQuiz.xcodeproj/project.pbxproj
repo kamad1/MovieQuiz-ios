@@ -16,6 +16,8 @@
 		81354FA82A1AB49100FB0E55 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81354FA72A1AB49100FB0E55 /* AlertModel.swift */; };
 		81354FAA2A1ABA0D00FB0E55 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81354FA92A1ABA0D00FB0E55 /* AlertPresenter.swift */; };
 		81354FAC2A1AC3B700FB0E55 /* AlertPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81354FAB2A1AC3B700FB0E55 /* AlertPresenterProtocol.swift */; };
+		81354FAE2A1D5C8900FB0E55 /* StatisticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81354FAD2A1D5C8900FB0E55 /* StatisticService.swift */; };
+		81354FB02A1D5ECE00FB0E55 /* GameRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81354FAF2A1D5ECE00FB0E55 /* GameRecord.swift */; };
 		81660A652A04595100B4CCB8 /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81660A632A04595100B4CCB8 /* YS Display-Medium.ttf */; };
 		81660A662A04595100B4CCB8 /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81660A642A04595100B4CCB8 /* YS Display-Bold.ttf */; };
 		AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ABAB12831907B00B3E448 /* AppDelegate.swift */; };
@@ -39,6 +41,8 @@
 		81354FA72A1AB49100FB0E55 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		81354FA92A1ABA0D00FB0E55 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		81354FAB2A1AC3B700FB0E55 /* AlertPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterProtocol.swift; sourceTree = "<group>"; };
+		81354FAD2A1D5C8900FB0E55 /* StatisticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticService.swift; sourceTree = "<group>"; };
+		81354FAF2A1D5ECE00FB0E55 /* GameRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRecord.swift; sourceTree = "<group>"; };
 		81660A632A04595100B4CCB8 /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		81660A642A04595100B4CCB8 /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
 		AD1ABAAE2831907B00B3E448 /* MovieQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +75,7 @@
 				81354F982A12CF1300FB0E55 /* QuestionFactory.swift */,
 				81354FA12A16C86800FB0E55 /* QuestionFactoryProtocol.swift */,
 				81354FA52A1AA39500FB0E55 /* QuestionFactoryDelegate.swift */,
+				81354FAD2A1D5C8900FB0E55 /* StatisticService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -82,6 +87,7 @@
 				81354F9D2A140F6F00FB0E55 /* QuizResultsViewModel.swift */,
 				81354F9F2A140F9800FB0E55 /* QuizQuestion.swift */,
 				81354FA72A1AB49100FB0E55 /* AlertModel.swift */,
+				81354FAF2A1D5ECE00FB0E55 /* GameRecord.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,6 +239,8 @@
 				AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */,
 				81354F9C2A140F5500FB0E55 /* QuizStepViewModel.swift in Sources */,
 				81354FA02A140F9800FB0E55 /* QuizQuestion.swift in Sources */,
+				81354FAE2A1D5C8900FB0E55 /* StatisticService.swift in Sources */,
+				81354FB02A1D5ECE00FB0E55 /* GameRecord.swift in Sources */,
 				81354F992A12CF1300FB0E55 /* QuestionFactory.swift in Sources */,
 				AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */,
 				AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */,
@@ -399,7 +407,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.MovieQuiz;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.kamadi.MovieQuiz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -429,7 +437,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.MovieQuiz;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.kamadi.MovieQuiz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

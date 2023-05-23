@@ -35,6 +35,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var currentQuestion: QuizQuestion?
     //mark: ДОБАВbЛ СТРОКУ НИЖЕ
     private var alertPresenter: AlertPresenterProtocol?
+    private var statisticService: StatisticService?
     
     
     
@@ -114,12 +115,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //mark: ДОБАВbЛ СТРОКУ НИЖЕ 
+        //mark: ДОБАВbЛ СТРОКУ НИЖЕ
+        
         alertPresenter = AlertPresenter(delegate: self)
         questionFactory = QuestionFactory(delegate: self)
         questionFactory?.requestNextQuestion()
         imageView.layer.cornerRadius = 20
-        
+        statisticService = StatisticServiceImplementation()
     }
     
     // MARK: - QuestionFactoryDelegate
