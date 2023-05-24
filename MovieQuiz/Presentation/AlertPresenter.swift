@@ -21,7 +21,7 @@ class AlertPresenter: AlertPresenterProtocol {
     func showQuizResult(model: AlertModel) {
         let alert = UIAlertController(
             title: model.title,
-            message: model.massege,
+            message: model.message,
             preferredStyle: .alert)
         let action = UIAlertAction(
             title: model.buttonText,
