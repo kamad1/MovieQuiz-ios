@@ -22,7 +22,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
         
     }
-    
+
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var counterLabel: UILabel!
