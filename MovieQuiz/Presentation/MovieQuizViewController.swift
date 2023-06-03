@@ -2,8 +2,6 @@ import UIKit
 // Добавил ниже AlertPresenterProtocol
 final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
-    
-    
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
     private let questionsAmount: Int = 10
@@ -11,7 +9,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenterProtocol?
     private var statisticService: StatisticService?
-    
     
     @IBAction private func noButtonClicked(_ sender: Any) {
         guard let currentQuestion = currentQuestion else {
@@ -28,9 +25,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             return
         }
         let givenAnswer = true
-        
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-        
     }
  
     @IBOutlet private weak var imageView: UIImageView!
@@ -38,16 +33,34 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private weak var counterLabel: UILabel!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var yesButton: UIButton!
+    
+    
     func didFailtoLoeadData(with error: Error) {
         showNetworkError(message: error.localizedDescription)
     }
-//    func didFailToLoadData(with error: Error) {
-//        showNetworkError(message: error.localizedDescription)
-//    }
     
     func didLoadDataFromServer() {
         activityIndicator.isHidden = true // скрываем индикатор загрузки
         questionFactory?.requestNextQuestion()
+    }
+    
+    // MARK: - QuestionFactoryDelegate
+    func didReceiveNextQuestion(question: QuizQuestion?) {
+        guard let question = question else {
+            return
+        }
+        currentQuestion = question
+        let viewModel = convert(model: question)
+        DispatchQueue.main.async { [weak self] in
+            self?.show(quiz: viewModel)
+        }
+    }
+    
+    private func enabledButtons(isEnabled: Bool) {
+        noButton.isEnabled = isEnabled
+        yesButton.isEnabled = isEnabled
     }
     
     private func showLoadingIndicator() {
@@ -74,18 +87,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 //        alertPresenter.show(in: self, model: model)
         alertPresenter?.showQuizResult(model: model)
     }
-    // MARK: - QuestionFactoryDelegate
     
-    func didReceiveNextQuestion(question: QuizQuestion?) {
-        guard let question = question else {
-            return
-        }
-        currentQuestion = question
-        let viewModel = convert(model: question)
-        DispatchQueue.main.async { [weak self] in
-            self?.show(quiz: viewModel)
-        }
-    }
     
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let questionStep = QuizStepViewModel(
@@ -133,8 +135,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         }
         
     }
-    
+//    MARK: фиксил Кнопки сделал их не активными при смене вопроса и теперь не возможно ответить больше 10 раз
     private func showAnswerResult(isCorrect: Bool) {
+        enabledButtons(isEnabled: false)
         if isCorrect {
             correctAnswers += 1
         }
@@ -145,10 +148,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
+            self.enabledButtons(isEnabled: true)
             self.showNextQuestionOrResults()
         }
     }
-    
+    // MARK: добавил белый цвет в статусбар
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
  
     // MARK: - Lifecycle
     override func viewDidLoad() {
