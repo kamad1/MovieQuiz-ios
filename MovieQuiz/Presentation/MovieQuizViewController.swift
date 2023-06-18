@@ -172,7 +172,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         statisticService = StatisticServiceImplementation()
     }
 }
-// cghbyn7
+
 
 
 
