@@ -21,12 +21,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
     }
      
-    @IBAction private func yesButtonClicked(_ sender: Any) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let givenAnswer = true
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
+        presenter.currentQuestion = currentQuestion
+        presenter.yesButtonClicked()
     }
  
     @IBOutlet private weak var imageView: UIImageView!
@@ -140,7 +137,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
     }
 //    MARK: фиксил Кнопки сделал их не активными при смене вопроса и теперь не возможно ответить больше 10 раз
-    private func showAnswerResult(isCorrect: Bool) {
+    func showAnswerResult(isCorrect: Bool) {
         enabledButtons(isEnabled: false)
         if isCorrect {
             correctAnswers += 1
@@ -165,7 +162,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //mark: ДОБАВbЛ СТРОКУ НИЖЕ
-        
+        presenter.viewController = self
         alertPresenter = AlertPresenter(delegate: self)
 //        questionFactory = QuestionFactory(delegate: self)
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
