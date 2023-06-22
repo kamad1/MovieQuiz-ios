@@ -43,5 +43,14 @@ final class MovieQuizPresenter {
             
             viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
         }
+    
+    func noButtonClicked() {
+        guard let currentQuestion = currentQuestion else {
+            return
+        }
+        let givenAnswer = false
+        
+        viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+            }
 }
 
