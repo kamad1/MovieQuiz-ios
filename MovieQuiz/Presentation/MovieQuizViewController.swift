@@ -3,8 +3,8 @@ import UIKit
 final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
 //    private var currentQuestionIndex = 0
-    private var correctAnswers = 0
 //    private let questionsAmount: Int = 10
+    private var correctAnswers = 0
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenterProtocol?
@@ -91,60 +91,69 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 //    }
     
      func show(quiz step: QuizStepViewModel) {
-        
+        imageView.layer.borderColor = UIColor.clear.cgColor
         imageView.image = step.image
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
     }
     
-    private func showNextQuestionOrResults() {
-        imageView.layer.borderWidth = 0
-        if presenter.isLastQuestion() {
-            imageView.layer.borderWidth = 8
-            statisticService?.store(correct: correctAnswers, total: presenter.questionsAmount)
-            guard let gamesCount = statisticService?.gamesCount else { return }
-            guard let bestGame = statisticService?.bestGame else { return }
-            guard let totalAccuracy = statisticService?.totalAccuracy else { return }
-            // QuizResultViewModel
-            
-            let finalScreen = AlertModel (title: "Этот раунд окончен!",
-                                          message: """
-     Ваш результат: \(correctAnswers)/\(presenter.questionsAmount)
-     Количество сыгранных квизов: \(gamesCount)
-     Рекорд: \(bestGame.correct)/\(bestGame.total) (\(bestGame.date.dateTimeString))
-     Средняя точность: \(String(format: "%.2f", totalAccuracy))%
-     """ ,
-                                          buttonText: "Сыграть еще раз",
-                                          completion: { [weak self] in
-                guard let self = self else { return }
-                self.imageView.layer.borderWidth = 0
-                self.presenter.resetQuestionIndex()
-                self.correctAnswers = 0
-                self.questionFactory?.requestNextQuestion()
-            })
-            alertPresenter?.showQuizResult(model: finalScreen)
-        } else {
-            presenter.switchToNextQuestion()
-//            currentQuestionIndex += 1
-            questionFactory?.requestNextQuestion()
-        }
-        
-    }
+    
+//    private func showNextQuestionOrResults() {
+//        imageView.layer.borderWidth = 0
+//        if presenter.isLastQuestion() {
+//            imageView.layer.borderWidth = 8
+//            statisticService?.store(correct: correctAnswers, total: presenter.questionsAmount)
+//            guard let gamesCount = statisticService?.gamesCount else { return }
+//            guard let bestGame = statisticService?.bestGame else { return }
+//            guard let totalAccuracy = statisticService?.totalAccuracy else { return }
+//            // QuizResultViewModel
+//            
+//            let finalScreen = AlertModel (title: "Этот раунд окончен!",
+//                                          message: """
+//     Ваш результат: \(correctAnswers)/\(presenter.questionsAmount)
+//     Количество сыгранных квизов: \(gamesCount)
+//     Рекорд: \(bestGame.correct)/\(bestGame.total) (\(bestGame.date.dateTimeString))
+//     Средняя точность: \(String(format: "%.2f", totalAccuracy))%
+//     """ ,
+//                                          buttonText: "Сыграть еще раз",
+//                                          completion: { [weak self] in
+//                guard let self = self else { return }
+//                self.imageView.layer.borderWidth = 0
+//                self.presenter.resetQuestionIndex()
+//                self.correctAnswers = 0
+//                self.questionFactory?.requestNextQuestion()
+//            })
+//            alertPresenter?.showQuizResult(model: finalScreen)
+//        } else {
+//            presenter.switchToNextQuestion()
+//           currentQuestionIndex += 1
+//            questionFactory?.requestNextQuestion()
+//        }
+//        
+//    }
+//    func highlightImageBorder(isCorrect: Bool) {
+//             imageView.layer.masksToBounds = true
+//             imageView.layer.borderWidth = 8
+//             imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+//         }
 //    MARK: фиксил Кнопки сделал их не активными при смене вопроса и теперь не возможно ответить больше 10 раз
     func showAnswerResult(isCorrect: Bool) {
         enabledButtons(isEnabled: false)
         if isCorrect {
             correctAnswers += 1
         }
-        
-        imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 8
-        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
-        
+//        highlightImageBorder(isCorrect: isCorrect)
+       imageView.layer.masksToBounds = true
+       imageView.layer.borderWidth = 8
+       imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
             self.enabledButtons(isEnabled: true)
-            self.showNextQuestionOrResults()
+            self.presenter.correctAnswers = self.correctAnswers
+            self.presenter.questionFactory = self.questionFactory
+            self.presenter.showNextQuestionOrResults()
+            
         }
     }
     // MARK: добавил белый цвет в статусбар
