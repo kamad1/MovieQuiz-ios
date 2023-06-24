@@ -99,7 +99,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     private func showNextQuestionOrResults() {
-//        imageView.layer.borderWidth = 0
+        imageView.layer.borderWidth = 0
         if presenter.isLastQuestion() {
             imageView.layer.borderWidth = 8
             statisticService?.store(correct: correctAnswers, total: presenter.questionsAmount)
