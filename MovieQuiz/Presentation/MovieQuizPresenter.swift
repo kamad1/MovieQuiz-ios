@@ -50,7 +50,7 @@ final class MovieQuizPresenter {
             guard let gamesCount = statisticService?.gamesCount else { return }
             guard let bestGame = statisticService?.bestGame else { return }
             guard let totalAccuracy = statisticService?.totalAccuracy else { return }
-            // QuizResultViewModel
+            // QuizResultViewModel    
             
             let finalScreen = AlertModel (title: "Этот раунд окончен!",
                                           message: """
