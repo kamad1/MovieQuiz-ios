@@ -97,6 +97,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         counterLabel.text = step.questionNumber
     }
     
+    
 //    private func showNextQuestionOrResults() {
 //        imageView.layer.borderWidth = 0
 //        if presenter.isLastQuestion() {
