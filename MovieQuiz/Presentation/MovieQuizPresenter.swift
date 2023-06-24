@@ -13,9 +13,11 @@ final class MovieQuizPresenter {
     let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     
+    
     init(statisticService: StatisticService? = StatisticServiceImplementation()) {
         self.statisticService = statisticService
     }
+   
     
     func isLastQuestion() -> Bool {
         currentQuestionIndex == questionsAmount - 1
@@ -66,6 +68,7 @@ final class MovieQuizPresenter {
                 questionFactory?.requestNextQuestion()
             })
             alertPresenter?.showQuizResult(model: finalScreen)
+
         } else {
             self.switchToNextQuestion()
             questionFactory?.requestNextQuestion()
@@ -90,7 +93,11 @@ final class MovieQuizPresenter {
         
     }
     
-    private func didAnswer(isYes: Bool) { viewController?.showAnswerResult(isCorrect: isYes == currentQuestion?.correctAnswer) }
+    private func didAnswer(isYes: Bool) { viewController?.showAnswerResult(isCorrect: isYes == currentQuestion?.correctAnswer)
+        
+    }
+    
+    
 //    private func didAnswer(isYes: Bool) {
 //       guard let currentQuestion = currentQuestion else {
 //            return

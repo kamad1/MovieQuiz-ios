@@ -168,6 +168,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         presenter.viewController = self
 //        alertPresenter = AlertPresenter(delegate: self)
 //        presenter.alertPresenter = alertPresenter
+        presenter.alertPresenter = AlertPresenter(delegate: self)
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         showLoadingIndicator()
         questionFactory?.loadData()
