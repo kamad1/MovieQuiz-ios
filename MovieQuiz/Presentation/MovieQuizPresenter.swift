@@ -1,9 +1,4 @@
-//
-//  MovieQuizPresenter.swift
-//  MovieQuiz
-//
-//  Created by Jedi on 22.06.2023.
-//
+
 import UIKit
 import Foundation
 
