@@ -7,7 +7,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var correctAnswers = 0
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
-    private var alertPresenter: AlertPresenterProtocol?
+//    private var alertPresenter: AlertPresenterProtocol?
     private var statisticService: StatisticService?
     private let presenter = MovieQuizPresenter()
     
@@ -78,7 +78,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         }
         
 //        alertPresenter.show(in: self, model: model)
-        alertPresenter?.showQuizResult(model: model)
+        presenter.alertPresenter?.showQuizResult(model: model)
     }
     
     
@@ -166,8 +166,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         super.viewDidLoad()
         //mark: ДОБАВbЛ СТРОКУ НИЖЕ
         presenter.viewController = self
-        alertPresenter = AlertPresenter(delegate: self)
-//        questionFactory = QuestionFactory(delegate: self)
+//        alertPresenter = AlertPresenter(delegate: self)
+//        presenter.alertPresenter = alertPresenter
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         showLoadingIndicator()
         questionFactory?.loadData()
