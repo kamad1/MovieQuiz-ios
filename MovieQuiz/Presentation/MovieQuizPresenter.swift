@@ -72,7 +72,7 @@ final class MovieQuizPresenter {
             self.switchToNextQuestion()
             questionFactory?.requestNextQuestion()
         }
-        
+         
     }
     
     func convert(model: QuizQuestion) -> QuizStepViewModel {
