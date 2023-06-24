@@ -173,10 +173,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 
 
 
-
-
-
-
 /*
  Mock-данные
  
