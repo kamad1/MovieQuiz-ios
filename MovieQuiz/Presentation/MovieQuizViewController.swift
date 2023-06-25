@@ -50,7 +50,7 @@ final class MovieQuizViewController: UIViewController {
 //        }
 //    }
     
-    private func enabledButtons(isEnabled: Bool) {
+    func enabledButtons(isEnabled: Bool) {
         noButton.isEnabled = isEnabled
         yesButton.isEnabled = isEnabled
     }
@@ -60,7 +60,7 @@ final class MovieQuizViewController: UIViewController {
         activityIndicator.startAnimating() // включаем анимацию
     }
     func hideLoadingIndicator() {
-        activityIndicator.hidesWhenStopped = false
+        activityIndicator.hidesWhenStopped = true
     }
     func showNetworkError(message: String) {
         hideLoadingIndicator()
@@ -131,32 +131,32 @@ final class MovieQuizViewController: UIViewController {
 //        }
 //        
 //    }
-//    func highlightImageBorder(isCorrect: Bool) {
-//             imageView.layer.masksToBounds = true
-//             imageView.layer.borderWidth = 8
-//             imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
-//         }
+    func highlightImageBorder(isCorrectAnswer: Bool) {
+            imageView.layer.masksToBounds = true
+            imageView.layer.borderWidth = 8
+            imageView.layer.borderColor = isCorrectAnswer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+        }
 //    MARK: фиксил Кнопки сделал их не активными при смене вопроса и теперь не возможно ответить больше 10 раз
-    func showAnswerResult(isCorrect: Bool) {
-        enabledButtons(isEnabled: false)
-        if isCorrect {
-//            correctAnswers += 1
-            presenter?.didAnswer(isCorrectAnswer: isCorrect)
-        }
-//        highlightImageBorder(isCorrect: isCorrect)
-       imageView.layer.masksToBounds = true
-       imageView.layer.borderWidth = 8
-       imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            self.enabledButtons(isEnabled: true)
-//            self.presenter.correctAnswers = self.correctAnswers
-//            self.presenter.questionFactory = self.questionFactory
-            self.presenter?.showNextQuestionOrResults()
-            
-        }
-    }
+//    func showAnswerResult(isCorrect: Bool) {
+//        enabledButtons(isEnabled: false)
+//        if isCorrect {
+////            correctAnswers += 1
+//            presenter?.didAnswer(isCorrectAnswer: isCorrect)
+//        }
+////        highlightImageBorder(isCorrect: isCorrect)
+//       imageView.layer.masksToBounds = true
+//       imageView.layer.borderWidth = 8
+//       imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+//            guard let self = self else { return }
+//            self.enabledButtons(isEnabled: true)
+////            self.presenter.correctAnswers = self.correctAnswers
+////            self.presenter.questionFactory = self.questionFactory
+//            self.presenter?.showNextQuestionOrResults()
+//            
+//        }
+//    }
     // MARK: добавил белый цвет в статусбар
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

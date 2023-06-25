@@ -53,7 +53,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         }
     }
     
-    func showNextQuestionOrResults() {
+    func proceedToNextQuestionOrResults() {
 //        imageView.layer.borderWidth = 0
         if self.isLastQuestion() {
 //            imageView.layer.borderWidth = 8
@@ -105,7 +105,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         
     }
     
-    private func didAnswer(isYes: Bool) { viewController?.showAnswerResult(isCorrect: isYes == currentQuestion?.correctAnswer)
+    private func didAnswer(isYes: Bool) { self.proceedWithAnswer(isCorrect: isYes == currentQuestion?.correctAnswer)
         
     }
     
@@ -113,6 +113,27 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         if isCorrectAnswer { correctAnswers += 1 }
     }
     
+    
+    func proceedWithAnswer(isCorrect: Bool) {
+        viewController?.enabledButtons(isEnabled: false)
+        if isCorrect {
+//            correctAnswers += 1
+            self.didAnswer(isCorrectAnswer: isCorrect)
+        }
+         viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
+//       imageView.layer.masksToBounds = true
+//       imageView.layer.borderWidth = 8
+//       imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else { return }
+            viewController?.enabledButtons(isEnabled: true)
+//            self.presenter.correctAnswers = self.correctAnswers
+//            self.presenter.questionFactory = self.questionFactory
+            self.proceedToNextQuestionOrResults()
+            
+        }
+    }
 //    func didReceiveNextQuestion(question: QuizQuestion?) {
 //                presenter.didReceiveNextQuestion(question: question)
 //    }
