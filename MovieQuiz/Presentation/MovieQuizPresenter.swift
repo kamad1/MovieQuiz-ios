@@ -23,8 +23,9 @@ final class MovieQuizPresenter {
         currentQuestionIndex == questionsAmount - 1
     }
     
-    func resetQuestionIndex() {
+    func restartGame() {
         currentQuestionIndex = 0
+        correctAnswers = 0
     }
     
     func switchToNextQuestion() {
@@ -63,7 +64,7 @@ final class MovieQuizPresenter {
                                           completion: { [weak self] in
                 guard let self = self else { return }
 //                self.imageView.layer.borderWidth = 0
-                self.resetQuestionIndex()
+                self.restartGame()
                 self.correctAnswers = 0
                 questionFactory?.requestNextQuestion()
             })
@@ -97,7 +98,9 @@ final class MovieQuizPresenter {
         
     }
     
-    
+    func didAnswer(isCorrectAnswer: Bool) {
+        if isCorrectAnswer { correctAnswers += 1 }
+    }
 //    private func didAnswer(isYes: Bool) {
 //       guard let currentQuestion = currentQuestion else {
 //            return

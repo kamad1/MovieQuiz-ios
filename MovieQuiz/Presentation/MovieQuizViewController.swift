@@ -4,7 +4,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
 //    private var currentQuestionIndex = 0
 //    private let questionsAmount: Int = 10
-    private var correctAnswers = 0
+//    private var correctAnswers = 0
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
 //    private var alertPresenter: AlertPresenterProtocol?
@@ -71,8 +71,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             guard let self = self else { return }
             
 //            self.currentQuestionIndex = 0
-            self.presenter.resetQuestionIndex()
-            self.correctAnswers = 0
+            self.presenter.restartGame()
+            self.presenter.correctAnswers = 0
             
             self.questionFactory?.requestNextQuestion()
         }
@@ -140,7 +140,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     func showAnswerResult(isCorrect: Bool) {
         enabledButtons(isEnabled: false)
         if isCorrect {
-            correctAnswers += 1
+//            correctAnswers += 1
+            presenter.didAnswer(isCorrectAnswer: isCorrect)
         }
 //        highlightImageBorder(isCorrect: isCorrect)
        imageView.layer.masksToBounds = true
@@ -150,7 +151,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
             self.enabledButtons(isEnabled: true)
-            self.presenter.correctAnswers = self.correctAnswers
+//            self.presenter.correctAnswers = self.correctAnswers
             self.presenter.questionFactory = self.questionFactory
             self.presenter.showNextQuestionOrResults()
             
