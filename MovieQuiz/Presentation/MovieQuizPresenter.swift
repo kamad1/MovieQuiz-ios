@@ -2,17 +2,24 @@
 import UIKit
 import Foundation
 
-final class MovieQuizPresenter {
+final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     var currentQuestion: QuizQuestion?
     weak var viewController: MovieQuizViewController?
     var correctAnswers = 0
-    var questionFactory: QuestionFactoryProtocol?
+    private var questionFactory: QuestionFactoryProtocol?
     var alertPresenter: AlertPresenterProtocol?
     private var statisticService: StatisticService?
     let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     
+    init(viewController: MovieQuizViewController) {
+            self.viewController = viewController
+            
+            questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+            questionFactory?.loadData()
+            viewController.showLoadingIndicator()
+        }
     
     init(statisticService: StatisticService? = StatisticServiceImplementation()) {
         self.statisticService = statisticService
@@ -26,6 +33,7 @@ final class MovieQuizPresenter {
     func restartGame() {
         currentQuestionIndex = 0
         correctAnswers = 0
+        questionFactory?.requestNextQuestion()
     }
     
     func switchToNextQuestion() {
@@ -66,7 +74,7 @@ final class MovieQuizPresenter {
 //                self.imageView.layer.borderWidth = 0
                 self.restartGame()
                 self.correctAnswers = 0
-                questionFactory?.requestNextQuestion()
+//                questionFactory?.requestNextQuestion()
             })
             alertPresenter?.showQuizResult(model: finalScreen)
 
@@ -100,6 +108,23 @@ final class MovieQuizPresenter {
     
     func didAnswer(isCorrectAnswer: Bool) {
         if isCorrectAnswer { correctAnswers += 1 }
+    }
+    
+//    func didReceiveNextQuestion(question: QuizQuestion?) {
+//                presenter.didReceiveNextQuestion(question: question)
+//    }
+    
+    // MARK: - QuestionFactoryDelegate
+    func didLoadDataFromServer() {
+//        activityIndicator.isHidden = true // скрываем индикатор загрузки
+        viewController?.hideLoadingIndicator()
+        questionFactory?.requestNextQuestion()
+    }
+    
+    func didFailtoLoeadData(with error: Error) {
+//        showNetworkError(message: error.localizedDescription)
+        let message = error.localizedDescription
+                viewController?.showNetworkError(message: message)
     }
 //    private func didAnswer(isYes: Bool) {
 //       guard let currentQuestion = currentQuestion else {

@@ -1,15 +1,15 @@
 import UIKit
 // Добавил ниже AlertPresenterProtocol
-final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
+final class MovieQuizViewController: UIViewController {
     
 //    private var currentQuestionIndex = 0
 //    private let questionsAmount: Int = 10
 //    private var correctAnswers = 0
-    private var questionFactory: QuestionFactoryProtocol?
+//    private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
 //    private var alertPresenter: AlertPresenterProtocol?
     private var statisticService: StatisticService?
-    private let presenter = MovieQuizPresenter()
+    private var presenter = MovieQuizPresenter()
     
     @IBAction private func noButtonClicked(_ sender: UIButton) {
         presenter.noButtonClicked()
@@ -28,18 +28,18 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private weak var yesButton: UIButton!
     
     
-    func didFailtoLoeadData(with error: Error) {
-        showNetworkError(message: error.localizedDescription)
-    }
+//    func didFailtoLoeadData(with error: Error) {
+//        showNetworkError(message: error.localizedDescription)
+//    }
     
-    func didLoadDataFromServer() {
-        activityIndicator.isHidden = true // скрываем индикатор загрузки
-        questionFactory?.requestNextQuestion()
-    }
+//    func didLoadDataFromServer() {
+//        activityIndicator.isHidden = true // скрываем индикатор загрузки
+//        questionFactory?.requestNextQuestion()
+//    }
     
-    // MARK: - QuestionFactoryDelegate
-    func didReceiveNextQuestion(question: QuizQuestion?) {
-        presenter.didReceiveNextQuestion(question: question)
+    
+//    func didReceiveNextQuestion(question: QuizQuestion?) {
+//        presenter.didReceiveNextQuestion(question: question)
 //        guard let question = question else {
 //            return
 //        }
@@ -48,21 +48,21 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 //        DispatchQueue.main.async { [weak self] in
 //            self?.show(quiz: viewModel)
 //        }
-    }
+//    }
     
     private func enabledButtons(isEnabled: Bool) {
         noButton.isEnabled = isEnabled
         yesButton.isEnabled = isEnabled
     }
     
-    private func showLoadingIndicator() {
+    func showLoadingIndicator() {
         activityIndicator.isHidden = false // говорим, что индикатор загрузки не скрыт
         activityIndicator.startAnimating() // включаем анимацию
     }
-    private func hideLoadingIndicator() {
-        activityIndicator.hidesWhenStopped = false
+    func hideLoadingIndicator() {
+        activityIndicator.hidesWhenStopped = true
     }
-    private func showNetworkError(message: String) {
+    func showNetworkError(message: String) {
         hideLoadingIndicator()
         
         let model = AlertModel(title: "Ошибка",
@@ -74,7 +74,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self.presenter.restartGame()
             self.presenter.correctAnswers = 0
             
-            self.questionFactory?.requestNextQuestion()
+//            self.questionFactory?.requestNextQuestion()
         }
         
 //        alertPresenter.show(in: self, model: model)
@@ -152,7 +152,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             guard let self = self else { return }
             self.enabledButtons(isEnabled: true)
 //            self.presenter.correctAnswers = self.correctAnswers
-            self.presenter.questionFactory = self.questionFactory
+//            self.presenter.questionFactory = self.questionFactory
             self.presenter.showNextQuestionOrResults()
             
         }
@@ -170,10 +170,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 //        alertPresenter = AlertPresenter(delegate: self)
 //        presenter.alertPresenter = alertPresenter
         presenter.alertPresenter = AlertPresenter(delegate: self)
-        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+        presenter = MovieQuizPresenter(viewController: self)
+//        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         showLoadingIndicator()
-        questionFactory?.loadData()
-        questionFactory?.requestNextQuestion()
+//        questionFactory?.loadData()
+//        questionFactory?.requestNextQuestion()
         imageView.layer.cornerRadius = 20
         statisticService = StatisticServiceImplementation()
     }
