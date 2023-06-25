@@ -8,7 +8,7 @@ final class MovieQuizViewController: UIViewController {
 //    private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
 //    private var alertPresenter: AlertPresenterProtocol?
-    private var statisticService: StatisticService?
+//    private var statisticService: StatisticService?
     private var presenter = MovieQuizPresenter()
     
     @IBAction private func noButtonClicked(_ sender: UIButton) {
@@ -176,7 +176,7 @@ final class MovieQuizViewController: UIViewController {
 //        questionFactory?.loadData()
 //        questionFactory?.requestNextQuestion()
         imageView.layer.cornerRadius = 20
-        statisticService = StatisticServiceImplementation()
+//        statisticService = StatisticServiceImplementation()
     }
 }
 
