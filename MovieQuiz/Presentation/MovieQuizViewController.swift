@@ -7,16 +7,16 @@ final class MovieQuizViewController: UIViewController {
 //    private var correctAnswers = 0
 //    private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
-//    private var alertPresenter: AlertPresenterProtocol?
-//    private var statisticService: StatisticService?
-    private var presenter = MovieQuizPresenter()
+    var alertPresenter: AlertPresenterProtocol?
+    private var statisticService: StatisticService?
+    private var presenter: MovieQuizPresenter?
     
     @IBAction private func noButtonClicked(_ sender: UIButton) {
-        presenter.noButtonClicked()
+        presenter?.noButtonClicked()
     }
      
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        presenter.yesButtonClicked()
+        presenter?.yesButtonClicked()
     }
  
     @IBOutlet private weak var imageView: UIImageView!
@@ -60,7 +60,7 @@ final class MovieQuizViewController: UIViewController {
         activityIndicator.startAnimating() // включаем анимацию
     }
     func hideLoadingIndicator() {
-        activityIndicator.hidesWhenStopped = true
+        activityIndicator.hidesWhenStopped = false
     }
     func showNetworkError(message: String) {
         hideLoadingIndicator()
@@ -71,14 +71,14 @@ final class MovieQuizViewController: UIViewController {
             guard let self = self else { return }
             
 //            self.currentQuestionIndex = 0
-            self.presenter.restartGame()
-            self.presenter.correctAnswers = 0
+            self.presenter?.restartGame()
+            self.presenter?.correctAnswers = 0
             
 //            self.questionFactory?.requestNextQuestion()
         }
         
 //        alertPresenter.show(in: self, model: model)
-        presenter.alertPresenter?.showQuizResult(model: model)
+        alertPresenter?.showQuizResult(model: model)
     }
     
     
@@ -141,7 +141,7 @@ final class MovieQuizViewController: UIViewController {
         enabledButtons(isEnabled: false)
         if isCorrect {
 //            correctAnswers += 1
-            presenter.didAnswer(isCorrectAnswer: isCorrect)
+            presenter?.didAnswer(isCorrectAnswer: isCorrect)
         }
 //        highlightImageBorder(isCorrect: isCorrect)
        imageView.layer.masksToBounds = true
@@ -153,7 +153,7 @@ final class MovieQuizViewController: UIViewController {
             self.enabledButtons(isEnabled: true)
 //            self.presenter.correctAnswers = self.correctAnswers
 //            self.presenter.questionFactory = self.questionFactory
-            self.presenter.showNextQuestionOrResults()
+            self.presenter?.showNextQuestionOrResults()
             
         }
     }
@@ -166,17 +166,17 @@ final class MovieQuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //mark: ДОБАВbЛ СТРОКУ НИЖЕ
-        presenter.viewController = self
+//        presenter.viewController = self
 //        alertPresenter = AlertPresenter(delegate: self)
 //        presenter.alertPresenter = alertPresenter
-        presenter.alertPresenter = AlertPresenter(delegate: self)
+       alertPresenter = AlertPresenter(delegate: self)
         presenter = MovieQuizPresenter(viewController: self)
 //        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         showLoadingIndicator()
 //        questionFactory?.loadData()
 //        questionFactory?.requestNextQuestion()
         imageView.layer.cornerRadius = 20
-//        statisticService = StatisticServiceImplementation()
+        statisticService = StatisticServiceImplementation()
     }
 }
 

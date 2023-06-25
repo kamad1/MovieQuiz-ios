@@ -8,7 +8,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     weak var viewController: MovieQuizViewController?
     var correctAnswers = 0
     private var questionFactory: QuestionFactoryProtocol?
-    var alertPresenter: AlertPresenterProtocol?
+//    var alertPresenter: AlertPresenterProtocol?
     private var statisticService: StatisticService?
     let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
@@ -17,15 +17,15 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             self.viewController = viewController
         
         statisticService = StatisticServiceImplementation()
-            
+        
             questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
             questionFactory?.loadData()
             viewController.showLoadingIndicator()
         }
     
-    init(statisticService: StatisticService? = StatisticServiceImplementation()) {
-        self.statisticService = statisticService
-    }
+//    init(statisticService: StatisticService? = StatisticServiceImplementation()) {
+//        self.statisticService = statisticService
+//    }
    
     
     func isLastQuestion() -> Bool {
@@ -58,6 +58,8 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         if self.isLastQuestion() {
 //            imageView.layer.borderWidth = 8
             statisticService?.store(correct: correctAnswers, total: self.questionsAmount)
+            
+            
             guard let gamesCount = statisticService?.gamesCount else { return }
             guard let bestGame = statisticService?.bestGame else { return }
             guard let totalAccuracy = statisticService?.totalAccuracy else { return }
@@ -78,13 +80,12 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
                 self.correctAnswers = 0
 //                questionFactory?.requestNextQuestion()
             })
-            alertPresenter?.showQuizResult(model: finalScreen)
+            viewController?.alertPresenter?.showQuizResult(model: finalScreen)
 
         } else {
             self.switchToNextQuestion()
             questionFactory?.requestNextQuestion()
         }
-         
     }
     
     func convert(model: QuizQuestion) -> QuizStepViewModel {
