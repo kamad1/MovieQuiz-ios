@@ -1,9 +1,5 @@
-//
-//  MovieQuizUITests.swift
-//  MovieQuizUITests
-//
-//  Created by Jedi on 17.06.2023.
-//
+
+
 
 import XCTest
 
