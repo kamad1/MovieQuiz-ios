@@ -42,7 +42,7 @@ final class MovieQuizPresenterTests: XCTestCase {
     }
 
     func testPresenterConvertModel() throws {
-            let viewControllerMock = MovieQuizViewControllerMock()
+            let viewControllerMock = MovieQuizControllerMock()
             let sut = MovieQuizPresenter(viewController: viewControllerMock)
             
             let emptyData = Data()
